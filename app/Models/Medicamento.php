@@ -6,5 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Medicamento extends Model
 {
-    //
+     protected $table = 'medicamentos';
+
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'presentacion'
+    ];
+
+    public function detallesFormula()
+    {
+        return $this->hasMany(DetalleFormulaMedica::class);
+    }
 }

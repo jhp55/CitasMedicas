@@ -9,19 +9,18 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('formulas_medicas', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+   public function up(): void
+{
+    Schema::create('formulas_medicas', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('historia_clinica_id')->constrained('historias_clinicas')->cascadeOnDelete();
+        $table->text('instrucciones')->nullable();
+        $table->timestamps();
+    });
+}
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('formulas_medicas');
-    }
+public function down(): void
+{
+    Schema::dropIfExists('formulas_medicas');
+}
 };

@@ -9,19 +9,23 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('pacientes', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+public function up(): void
+{
+    Schema::create('pacientes', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('user_id')->unique()->constrained('users')->cascadeOnDelete();
+        $table->string('tipo_documento');
+        $table->string('numero_documento')->unique();
+        $table->string('telefono')->nullable();
+        $table->date('fecha_nacimiento')->nullable();
+        $table->string('genero')->nullable();
+        $table->string('direccion')->nullable();
+        $table->timestamps();
+    });
+}
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('pacientes');
-    }
+public function down(): void
+{
+    Schema::dropIfExists('pacientes');
+}
 };

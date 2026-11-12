@@ -6,5 +6,61 @@ use Illuminate\Http\Request;
 
 class MedicamentoController extends Controller
 {
-    //
+     public function index()
+    {
+        $medicamentos = Medicamento::all();
+
+        return view('medicamentos.index', compact('medicamentos'));
+    }
+
+    public function create()
+    {
+        return view('medicamentos.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+            'presentacion' => 'nullable|string|max:255'
+        ]);
+
+        Medicamento::create($request->all());
+
+        return redirect()->route('medicamentos.index')
+            ->with('success', 'Medicamento registrado correctamente.');
+    }
+
+    public function show(Medicamento $medicamento)
+    {
+        return view('medicamentos.show', compact('medicamento'));
+    }
+
+    public function edit(Medicamento $medicamento)
+    {
+        return view('medicamentos.edit', compact('medicamento'));
+    }
+
+    public function update(Request $request, Medicamento $medicamento)
+    {
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'nullable|string',
+            'presentacion' => 'nullable|string|max:255'
+        ]);
+
+        $medicamento->update($request->all());
+
+        return redirect()->route('medicamentos.index')
+            ->with('success', 'Medicamento actualizado correctamente.');
+    }
+
+    public function destroy(Medicamento $medicamento)
+    {
+        $medicamento->delete();
+
+        return redirect()->route('medicamentos.index')
+            ->with('success', 'Medicamento eliminado correctamente.');
+    }
 }

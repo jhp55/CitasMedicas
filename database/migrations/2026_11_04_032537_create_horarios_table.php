@@ -9,19 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('horarios', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+  public function up(): void
+{
+    Schema::create('horarios', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('medico_id')->constrained('medicos')->cascadeOnDelete();
+        $table->unsignedTinyInteger('dia_semana');
+        $table->time('hora_inicio');
+        $table->time('hora_fin');
+        $table->boolean('disponible')->default(true);
+        $table->timestamps();
+    });
+}
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('horarios');
-    }
+public function down(): void
+{
+    Schema::dropIfExists('horarios');
+}
 };
