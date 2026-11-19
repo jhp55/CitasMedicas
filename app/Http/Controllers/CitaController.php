@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Cita;
+use App\Models\Paciente;
+use App\Models\Medico;
 
 class CitaController extends Controller
 {
