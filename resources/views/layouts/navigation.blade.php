@@ -1,3 +1,6 @@
+@php
+    $role = Auth::user()->role ?? 'paciente';
+@endphp
 
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
 
@@ -30,29 +33,66 @@
                 <div class="hidden space-x-6 sm:-my-px sm:ms-10 sm:flex">
 
                     <x-nav-link :href="route('dashboard')"
-                                :active="request()->routeIs('dashboard')">
+                                :active="request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') || request()->routeIs('medico.dashboard') || request()->routeIs('paciente.dashboard')">
                         Inicio
                     </x-nav-link>
 
-                    <x-nav-link :href="route('pacientes.index')"
-                                :active="request()->routeIs('pacientes.*')">
-                        Pacientes
-                    </x-nav-link>
+                    @if ($role === 'paciente')
+                        <x-nav-link :href="route('paciente.agendar')"
+                                    :active="request()->routeIs('paciente.agendar')">
+                            Agendar
+                        </x-nav-link>
 
-                    <x-nav-link :href="route('medicos.index')"
-                                :active="request()->routeIs('medicos.*')">
-                        Médicos
-                    </x-nav-link>
+                        <x-nav-link :href="route('paciente.citas')"
+                                    :active="request()->routeIs('paciente.citas')">
+                            Mis citas
+                        </x-nav-link>
 
-                    <x-nav-link :href="route('citas.index')"
-                                :active="request()->routeIs('citas.*')">
-                        Citas
-                    </x-nav-link>
+                        <x-nav-link :href="route('paciente.historial')"
+                                    :active="request()->routeIs('paciente.historial')">
+                            Historial
+                        </x-nav-link>
 
-                    <x-nav-link :href="route('especialidades.index')"
-                                :active="request()->routeIs('especialidades.*')">
-                        Especialidades
-                    </x-nav-link>
+                        <x-nav-link :href="route('paciente.medicamentos')"
+                                    :active="request()->routeIs('paciente.medicamentos')">
+                            Medicamentos
+                        </x-nav-link>
+                    @elseif ($role === 'medico')
+                        <x-nav-link :href="route('medico.agenda')"
+                                    :active="request()->routeIs('medico.agenda')">
+                            Agenda
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('medico.pacientes')"
+                                    :active="request()->routeIs('medico.pacientes')">
+                            Pacientes
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('citas.index')"
+                                    :active="request()->routeIs('citas.*')">
+                            Citas
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('pacientes.index')"
+                                    :active="request()->routeIs('pacientes.*')">
+                            Pacientes
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('medicos.index')"
+                                    :active="request()->routeIs('medicos.*')">
+                            Médicos
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('citas.index')"
+                                    :active="request()->routeIs('citas.*')">
+                            Citas
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('especialidades.index')"
+                                    :active="request()->routeIs('especialidades.*')">
+                            Especialidades
+                        </x-nav-link>
+                    @endif
 
                 </div>
             </div>
@@ -134,29 +174,66 @@
         <div class="pt-2 pb-3 space-y-1">
 
             <x-responsive-nav-link :href="route('dashboard')"
-                                   :active="request()->routeIs('dashboard')">
+                                   :active="request()->routeIs('dashboard') || request()->routeIs('admin.dashboard') || request()->routeIs('medico.dashboard') || request()->routeIs('paciente.dashboard')">
                 Inicio
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('pacientes.index')"
-                                   :active="request()->routeIs('pacientes.*')">
-                Pacientes
-            </x-responsive-nav-link>
+            @if ($role === 'paciente')
+                <x-responsive-nav-link :href="route('paciente.agendar')"
+                                       :active="request()->routeIs('paciente.agendar')">
+                    Agendar
+                </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('medicos.index')"
-                                   :active="request()->routeIs('medicos.*')">
-                Médicos
-            </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('paciente.citas')"
+                                       :active="request()->routeIs('paciente.citas')">
+                    Mis citas
+                </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('citas.index')"
-                                   :active="request()->routeIs('citas.*')">
-                Citas
-            </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('paciente.historial')"
+                                       :active="request()->routeIs('paciente.historial')">
+                    Historial
+                </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('especialidades.index')"
-                                   :active="request()->routeIs('especialidades.*')">
-                Especialidades
-            </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('paciente.medicamentos')"
+                                       :active="request()->routeIs('paciente.medicamentos')">
+                    Medicamentos
+                </x-responsive-nav-link>
+            @elseif ($role === 'medico')
+                <x-responsive-nav-link :href="route('medico.agenda')"
+                                       :active="request()->routeIs('medico.agenda')">
+                    Agenda
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('medico.pacientes')"
+                                       :active="request()->routeIs('medico.pacientes')">
+                    Pacientes
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('citas.index')"
+                                       :active="request()->routeIs('citas.*')">
+                    Citas
+                </x-responsive-nav-link>
+            @else
+                <x-responsive-nav-link :href="route('pacientes.index')"
+                                       :active="request()->routeIs('pacientes.*')">
+                    Pacientes
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('medicos.index')"
+                                       :active="request()->routeIs('medicos.*')">
+                    Médicos
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('citas.index')"
+                                       :active="request()->routeIs('citas.*')">
+                    Citas
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('especialidades.index')"
+                                       :active="request()->routeIs('especialidades.*')">
+                    Especialidades
+                </x-responsive-nav-link>
+            @endif
 
         </div>
 
